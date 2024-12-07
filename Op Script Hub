@@ -57,6 +57,7 @@ local function RemoveESP(player)
 end
 
 -- Scripts Section
+ScriptsTab:AddLabel("Note: The Godmode script currently doesn't work with Dozer.")
 ScriptsTab:AddButton({
     Name = "Activate Godmode",
     Callback = function()
