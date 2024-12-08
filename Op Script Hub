@@ -56,7 +56,6 @@ local function RemoveESP(player)
     end
 end
 
--- Scripts Section
 ScriptsTab:AddLabel("Note: The Godmode script currently doesn't work with Dozer.")
 ScriptsTab:AddButton({
     Name = "Activate Godmode",
@@ -79,7 +78,6 @@ ScriptsTab:AddButton({
     end    
 })
 
--- WalkSpeed and JumpPower Section
 ScriptsTab:AddLabel("Original Walk Speed: 16")
 ScriptsTab:AddTextbox({
     Name = "Set Walk Speed",
@@ -89,13 +87,6 @@ ScriptsTab:AddTextbox({
         local walkSpeedValue = tonumber(Value)
         if walkSpeedValue and walkSpeedValue > 0 and walkSpeedValue <= 500 then
             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkSpeedValue
-        else
-            OrionLib:MakeNotification({
-                Name = "Invalid Input",
-                Content = "Enter a valid Walk Speed between 16 and 500.",
-                Image = "rbxassetid://4483345998",
-                Time = 5
-            })
         end
     end
 })
@@ -116,13 +107,6 @@ ScriptsTab:AddTextbox({
         local jumpPowerValue = tonumber(Value)
         if jumpPowerValue and jumpPowerValue >= 50 and jumpPowerValue <= 200 then
             game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpPowerValue
-        else
-            OrionLib:MakeNotification({
-                Name = "Invalid Input",
-                Content = "Enter a valid Jump Power between 50 and 200.",
-                Image = "rbxassetid://4483345998",
-                Time = 5
-            })
         end
     end
 })
@@ -134,7 +118,6 @@ ScriptsTab:AddButton({
     end    
 })
 
--- Miscellaneous Section
 MiscellaneousTab:AddButton({
     Name = "Infinite Yield",
     Callback = function()
@@ -156,24 +139,53 @@ MiscellaneousTab:AddButton({
     end
 })
 
-MiscellaneousTab:AddToggle({
-    Name = "Anti-AFK",
-    Default = false,
-    Callback = function(Value)
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid")
-
-        if Value then
-            while Value do
-                wait(5)  -- Keeps the player from going AFK every 5 seconds
-                humanoid:Move(Vector3.new(math.random(), math.random(), math.random()))  -- Small random movement to prevent AFK kick
-            end
-        end
+MiscellaneousTab:AddButton({
+    Name = "FullBright",
+    Callback = function()
+        game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
+        game:GetService("Lighting").Brightness = 2
     end    
 })
 
--- Credits Section
+MiscellaneousTab:AddButton({
+    Name = "Destroy FullBright",
+    Callback = function()
+        local lighting = game:GetService("Lighting")
+        lighting.Ambient = Color3.fromRGB(127, 127, 127)
+        lighting.Brightness = 1
+        lighting.ClockTime = 0
+    end    
+})
+
+local infiniteJumpConnection
+
+MiscellaneousTab:AddButton({
+    Name = "Infinite Jump",
+    Callback = function()
+        local UserInputService = game:GetService("UserInputService")
+        if infiniteJumpConnection then 
+            infiniteJumpConnection:Disconnect() 
+        end
+        infiniteJumpConnection = UserInputService.JumpRequest:Connect(function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            if character:FindFirstChild("Humanoid") then
+                character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end)
+    end
+})
+
+MiscellaneousTab:AddButton({
+    Name = "Stop Infinite Jump",
+    Callback = function()
+        if infiniteJumpConnection then
+            infiniteJumpConnection:Disconnect()
+            infiniteJumpConnection = nil
+        end
+    end
+})
+
 CreditsTab:AddLabel("Credits")
 CreditsTab:AddParagraph("Made by BlackWaterYT", "Thanks to the community for the support!")
 CreditsTab:AddLabel("Special thanks for all the help!")
