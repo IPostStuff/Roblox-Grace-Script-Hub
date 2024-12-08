@@ -24,58 +24,48 @@ local CreditsTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local Players = game:GetService("Players")
-local Camera = game:GetService("Workspace").CurrentCamera
+local buttonCooldowns = {}
 
-local function DrawESP(player)
-    local espPart = Instance.new("BillboardGui")
-    espPart.Adornee = player.Character:FindFirstChild("Head")
-    espPart.Parent = player.Character:FindFirstChild("Head")
-    espPart.Size = UDim2.new(0, 100, 0, 50)
-    espPart.StudsOffset = Vector3.new(0, 2, 0)
-    
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Parent = espPart
-    textLabel.Size = UDim2.new(1, 0, 1, 0)
-    textLabel.BackgroundTransparency = 1
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    textLabel.TextStrokeTransparency = 0.8
-    textLabel.Text = player.Name .. " | Health: " .. tostring(player.Character.Humanoid.Health)
-    
-    player.Character.Humanoid.HealthChanged:Connect(function()
-        textLabel.Text = player.Name .. " | Health: " .. tostring(player.Character.Humanoid.Health)
-    end)
+local function applyCooldown(buttonName)
+    buttonCooldowns[buttonName] = tick()
 end
 
-local function RemoveESP(player)
-    if player.Character and player.Character:FindFirstChild("Head") then
-        local billboard = player.Character.Head:FindFirstChildOfClass("BillboardGui")
-        if billboard then
-            billboard:Destroy()
-        end
+local function isInCooldown(buttonName)
+    if buttonCooldowns[buttonName] and (tick() - buttonCooldowns[buttonName] < 5) then
+        return true
     end
+    return false
 end
 
 ScriptsTab:AddLabel("Note: The Godmode script currently doesn't work with Dozer.")
 ScriptsTab:AddButton({
     Name = "Activate Godmode",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Grace-Godmode-Script/refs/heads/main/Godmode%20Script%20%2B%20Activate%20Levers "))()
-    end    
+        if not isInCooldown("Activate Godmode") then
+            applyCooldown("Activate Godmode")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Grace-Godmode-Script/refs/heads/main/Godmode%20Script%20%2B%20Activate%20Levers"))()
+        end
+    end
 })
 
 ScriptsTab:AddButton({
     Name = "Grace Get Stimulated Script For Mobile",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Roblox-Grace-Get-Stimulated-Script/refs/heads/main/Get%20Stimulated"))()
-    end    
+        if not isInCooldown("Grace Get Stimulated Script For Mobile") then
+            applyCooldown("Grace Get Stimulated Script For Mobile")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Roblox-Grace-Get-Stimulated-Script/refs/heads/main/Get%20Stimulated"))()
+        end
+    end
 })
 
 ScriptsTab:AddButton({
     Name = "Spinning Flashlight for PC",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Spinning-Flashlight-For-Pc/refs/heads/main/Grace%20Script"))()
-    end    
+        if not isInCooldown("Spinning Flashlight for PC") then
+            applyCooldown("Spinning Flashlight for PC")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Spinning-Flashlight-For-Pc/refs/heads/main/Grace%20Script"))()
+        end
+    end
 })
 
 ScriptsTab:AddLabel("Original Walk Speed: 16")
@@ -94,8 +84,11 @@ ScriptsTab:AddTextbox({
 ScriptsTab:AddButton({
     Name = "Reset Walk Speed",
     Callback = function()
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-    end    
+        if not isInCooldown("Reset Walk Speed") then
+            applyCooldown("Reset Walk Speed")
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+    end
 })
 
 ScriptsTab:AddLabel("Original Jump Power: 50")
@@ -114,76 +107,125 @@ ScriptsTab:AddTextbox({
 ScriptsTab:AddButton({
     Name = "Reset Jump Power",
     Callback = function()
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-    end    
+        if not isInCooldown("Reset Jump Power") then
+            applyCooldown("Reset Jump Power")
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+        end
+    end
 })
 
 MiscellaneousTab:AddButton({
     Name = "Infinite Yield",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+        if not isInCooldown("Infinite Yield") then
+            applyCooldown("Infinite Yield")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+        end
     end
 })
 
 MiscellaneousTab:AddButton({
     Name = "Nameless Admin",
     Callback = function()
-        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-Admin-23304"))()
+        if not isInCooldown("Nameless Admin") then
+            applyCooldown("Nameless Admin")
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-Admin-23304"))()
+        end
     end
 })
 
 MiscellaneousTab:AddButton({
     Name = "X Ghost Hub X",
     Callback = function()
-        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ghost-hub-22779"))()
+        if not isInCooldown("X Ghost Hub X") then
+            applyCooldown("X Ghost Hub X")
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ghost-hub-22779"))()
+        end
     end
 })
 
 MiscellaneousTab:AddButton({
-    Name = "FullBright",
+    Name = "Fullbright",
     Callback = function()
-        game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
-        game:GetService("Lighting").Brightness = 2
-    end    
+        if not isInCooldown("Fullbright") then
+            applyCooldown("Fullbright")
+            game.Lighting.Brightness = 2
+            game.Lighting.ClockTime = 14
+            game.Lighting.FogEnd = 100000
+            game.Lighting.Ambient = Color3.fromRGB(178, 178, 178)
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                local light = Instance.new("PointLight")
+                light.Name = "CustomLight"
+                light.Brightness = 5
+                light.Range = 20
+                light.Color = Color3.fromRGB(255, 255, 200)
+                light.Parent = character.HumanoidRootPart
+            end
+        end
+    end
 })
 
 MiscellaneousTab:AddButton({
-    Name = "Destroy FullBright",
+    Name = "Destroy Fullbright",
     Callback = function()
-        local lighting = game:GetService("Lighting")
-        lighting.Ambient = Color3.fromRGB(127, 127, 127)
-        lighting.Brightness = 1
-        lighting.ClockTime = 0
-    end    
+        if not isInCooldown("Destroy Fullbright") then
+            applyCooldown("Destroy Fullbright")
+            game.Lighting.Brightness = 1
+            game.Lighting.ClockTime = 0
+            game.Lighting.FogEnd = 500
+            game.Lighting.Ambient = Color3.fromRGB(0, 0, 0)
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                local light = character.HumanoidRootPart:FindFirstChild("CustomLight")
+                if light then
+                    light:Destroy()
+                end
+            end
+        end
+    end
 })
-
-local infiniteJumpConnection
 
 MiscellaneousTab:AddButton({
     Name = "Infinite Jump",
     Callback = function()
-        local UserInputService = game:GetService("UserInputService")
-        if infiniteJumpConnection then 
-            infiniteJumpConnection:Disconnect() 
+        if not isInCooldown("Infinite Jump") then
+            applyCooldown("Infinite Jump")
+            _G.InfiniteJumpEnabled = true
+            game:GetService("UserInputService").JumpRequest:Connect(function()
+                if _G.InfiniteJumpEnabled then
+                    game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+                end
+            end)
         end
-        infiniteJumpConnection = UserInputService.JumpRequest:Connect(function()
-            local player = game.Players.LocalPlayer
-            local character = player.Character or player.CharacterAdded:Wait()
-            if character:FindFirstChild("Humanoid") then
-                character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-            end
-        end)
     end
 })
 
 MiscellaneousTab:AddButton({
     Name = "Stop Infinite Jump",
     Callback = function()
-        if infiniteJumpConnection then
-            infiniteJumpConnection:Disconnect()
-            infiniteJumpConnection = nil
+        if not isInCooldown("Stop Infinite Jump") then
+            applyCooldown("Stop Infinite Jump")
+            _G.InfiniteJumpEnabled = false
         end
     end
+})
+
+MiscellaneousTab:AddToggle({
+    Name = "Anti-AFK",
+    Default = false,
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+
+        if Value then
+            while Value do
+                wait(5)
+                humanoid:Move(Vector3.new(math.random(), math.random(), math.random()))
+            end
+        end
+    end    
 })
 
 CreditsTab:AddLabel("Credits")
