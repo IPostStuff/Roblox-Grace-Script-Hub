@@ -37,7 +37,7 @@ local function isInCooldown(buttonName)
     return false
 end
 
-ScriptsTab:AddLabel("Note: The Godmode script currently doesn't work with Dozer.")
+ScriptsTab:AddLabel("Note: The Godmode script works with dozer thanks to astrallx.")
 ScriptsTab:AddButton({
     Name = "Activate Godmode (Credits To Astrallx)",
     Callback = function()
