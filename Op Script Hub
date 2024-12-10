@@ -39,11 +39,11 @@ end
 
 ScriptsTab:AddLabel("Note: The Godmode script currently doesn't work with Dozer.")
 ScriptsTab:AddButton({
-    Name = "Activate Godmode",
+    Name = "Activate Godmode (Credits To Astrallx)",
     Callback = function()
         if not isInCooldown("Activate Godmode") then
             applyCooldown("Activate Godmode")
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Grace-Godmode-Script/refs/heads/main/Godmode%20Script%20%2B%20Activate%20Levers"))()
+            loadstring(game:HttpGet(" https://raw.githubusercontent.com/IPostStuff/Updated-Grace-Godmode/refs/heads/main/Removed%20Dozer"))()
         end
     end
 })
