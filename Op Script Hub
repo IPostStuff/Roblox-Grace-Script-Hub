@@ -1,235 +1,187 @@
-local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = OrionLib:MakeWindow({
+local Window = Rayfield:CreateWindow({
     Name = "Grace Script Hub",
-    HidePremium = false,
-    SaveConfig = false,
+    Icon = 0,
+    LoadingTitle = "Grace ScriptHub Loading..",
+    LoadingSubtitle = "Made With ❤ By Blackwateryt",
+    Theme = "DarkBlue", -- Set theme to DarkBlue
+    DisableRayfieldPrompts = false,
+    DisableBuildWarnings = false,
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil,
+        FileName = "Grace Hub"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "noinvitelink",
+        RememberJoins = true
+    },
+    KeySystem = false,
+    KeySettings = {
+        Title = "Key System",
+        Subtitle = "Enter the Key",
+        Note = "No method of obtaining the key is provided",
+        FileName = "Key",
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = {"Hello"}
+    }
 })
 
-local ScriptsTab = Window:MakeTab({
-    Name = "Scripts",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
+-- Scripts Tab
+local ScriptsTab = Window:CreateTab("Scripts", 4483362458)
 
-local MiscellaneousTab = Window:MakeTab({
-    Name = "Miscellaneous",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
-local CreditsTab = Window:MakeTab({
-    Name = "Credits",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
-local buttonCooldowns = {}
-
-local function applyCooldown(buttonName)
-    buttonCooldowns[buttonName] = tick()
-end
-
-local function isInCooldown(buttonName)
-    if buttonCooldowns[buttonName] and (tick() - buttonCooldowns[buttonName] < 5) then
-        return true
-    end
-    return false
-end
-
-ScriptsTab:AddLabel("Note: The Godmode script works with dozer thanks to astrallx.")
-ScriptsTab:AddButton({
-    Name = "Activate Godmode (Credits To Astrallx)",
+ScriptsTab:CreateButton({
+    Name = "Activate Godmode",
     Callback = function()
-        if not isInCooldown("Activate Godmode") then
-            applyCooldown("Activate Godmode")
-            loadstring(game:HttpGet(" https://raw.githubusercontent.com/IPostStuff/Updated-Grace-Godmode/refs/heads/main/Removed%20Dozer"))()
-        end
-    end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Updated-Grace-Godmode/refs/heads/main/Removed%20Dozer"))()
+    end,
 })
 
-ScriptsTab:AddButton({
+ScriptsTab:CreateButton({
     Name = "Grace Get Stimulated Script For Mobile",
     Callback = function()
-        if not isInCooldown("Grace Get Stimulated Script For Mobile") then
-            applyCooldown("Grace Get Stimulated Script For Mobile")
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Roblox-Grace-Get-Stimulated-Script/refs/heads/main/Get%20Stimulated"))()
-        end
-    end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Roblox-Grace-Get-Stimulated-Script/refs/heads/main/Get%20Stimulated"))()
+    end,
 })
 
-ScriptsTab:AddButton({
-    Name = "Spinning Flashlight for PC",
+ScriptsTab:CreateButton({
+    Name = "Spinning Flashlight for PC (Not Tested)",
     Callback = function()
-        if not isInCooldown("Spinning Flashlight for PC") then
-            applyCooldown("Spinning Flashlight for PC")
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Spinning-Flashlight-For-Pc/refs/heads/main/Grace%20Script"))()
-        end
-    end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Spinning-Flashlight-For-Pc/refs/heads/main/Grace%20Script"))()
+    end,
 })
 
-ScriptsTab:AddLabel("Original Walk Speed: 16")
-ScriptsTab:AddTextbox({
-    Name = "Set Walk Speed",
-    Default = "16",
-    TextDisappear = true,
+-- Add sliders to the Scripts Tab
+ScriptsTab:CreateSlider({
+    Name = "Walk Speed",
+    Range = {0, 500},
+    Increment = 1,
+    Suffix = "Speed",
+    CurrentValue = 16,
+    Flag = "WalkSpeed",
     Callback = function(Value)
-        local walkSpeedValue = tonumber(Value)
-        if walkSpeedValue and walkSpeedValue > 0 and walkSpeedValue <= 500 then
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkSpeedValue
-        end
-    end
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end,
 })
 
-ScriptsTab:AddButton({
-    Name = "Reset Walk Speed",
-    Callback = function()
-        if not isInCooldown("Reset Walk Speed") then
-            applyCooldown("Reset Walk Speed")
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-        end
-    end
-})
-
-ScriptsTab:AddLabel("Original Jump Power: 50")
-ScriptsTab:AddTextbox({
-    Name = "Set Jump Power",
-    Default = "50",
-    TextDisappear = true,
+ScriptsTab:CreateSlider({
+    Name = "Jump Power",
+    Range = {50, 200},
+    Increment = 1,
+    Suffix = "Power",
+    CurrentValue = 50,
+    Flag = "JumpPower",
     Callback = function(Value)
-        local jumpPowerValue = tonumber(Value)
-        if jumpPowerValue and jumpPowerValue >= 50 and jumpPowerValue <= 200 then
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpPowerValue
-        end
-    end
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+    end,
 })
 
-ScriptsTab:AddButton({
-    Name = "Reset Jump Power",
-    Callback = function()
-        if not isInCooldown("Reset Jump Power") then
-            applyCooldown("Reset Jump Power")
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-        end
-    end
-})
+-- Miscellaneous Tab
+local MiscellaneousTab = Window:CreateTab("Miscellaneous", 4483362458)
 
-MiscellaneousTab:AddButton({
+-- Infinite Yield Button (Moved to top)
+MiscellaneousTab:CreateButton({
     Name = "Infinite Yield",
     Callback = function()
-        if not isInCooldown("Infinite Yield") then
-            applyCooldown("Infinite Yield")
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
-        end
-    end
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Infinite-Yield_500"))()
+    end,
 })
 
-MiscellaneousTab:AddButton({
+-- Ghost Hub Button (Under Infinite Yield)
+MiscellaneousTab:CreateButton({
+    Name = "Ghost Hub",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-X-Ghost-Hub-X-7595"))()
+    end,
+})
+
+-- Nameless Admin Button (Under Ghost Hub)
+MiscellaneousTab:CreateButton({
     Name = "Nameless Admin",
     Callback = function()
-        if not isInCooldown("Nameless Admin") then
-            applyCooldown("Nameless Admin")
-            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-Admin-23304"))()
-        end
-    end
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-Admin-V2-24856"))()
+    end,
 })
 
-MiscellaneousTab:AddButton({
-    Name = "X Ghost Hub X",
-    Callback = function()
-        if not isInCooldown("X Ghost Hub X") then
-            applyCooldown("X Ghost Hub X")
-            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ghost-hub-22779"))()
+-- Anti AFK Toggle
+local AntiAFK = false
+MiscellaneousTab:CreateToggle({
+    Name = "Anti AFK",
+    CurrentValue = false,
+    Flag = "AntiAFK",
+    Callback = function(Value)
+        AntiAFK = Value
+        if AntiAFK then
+            while AntiAFK do
+                game:GetService("VirtualUser"):Button1Down(Vector2.new(0, 0))
+                wait(10)
+            end
         end
-    end
+    end,
 })
 
-MiscellaneousTab:AddButton({
+-- Fullbright Button
+local fullBrightEnabled = false
+MiscellaneousTab:CreateButton({
     Name = "Fullbright",
     Callback = function()
-        if not isInCooldown("Fullbright") then
-            applyCooldown("Fullbright")
-            game.Lighting.Brightness = 2
-            game.Lighting.ClockTime = 14
-            game.Lighting.FogEnd = 100000
-            game.Lighting.Ambient = Color3.fromRGB(178, 178, 178)
-            local character = game.Players.LocalPlayer.Character
-            if character and character:FindFirstChild("HumanoidRootPart") then
-                local light = Instance.new("PointLight")
-                light.Name = "CustomLight"
-                light.Brightness = 5
-                light.Range = 20
-                light.Color = Color3.fromRGB(255, 255, 200)
-                light.Parent = character.HumanoidRootPart
-            end
-        end
-    end
+        fullBrightEnabled = true
+        game.Lighting.FogEnd = 100000
+        game.Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+        game.Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+        local lightPart = Instance.new("PointLight")
+        lightPart.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+        lightPart.Range = 100
+        lightPart.Brightness = 5
+    end,
 })
 
-MiscellaneousTab:AddButton({
+-- Destroy Fullbright Button
+MiscellaneousTab:CreateButton({
     Name = "Destroy Fullbright",
     Callback = function()
-        if not isInCooldown("Destroy Fullbright") then
-            applyCooldown("Destroy Fullbright")
-            game.Lighting.Brightness = 1
-            game.Lighting.ClockTime = 0
-            game.Lighting.FogEnd = 500
-            game.Lighting.Ambient = Color3.fromRGB(0, 0, 0)
-            local character = game.Players.LocalPlayer.Character
-            if character and character:FindFirstChild("HumanoidRootPart") then
-                local light = character.HumanoidRootPart:FindFirstChild("CustomLight")
-                if light then
-                    light:Destroy()
-                end
+        fullBrightEnabled = false
+        game.Lighting.FogEnd = 1000
+        game.Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+        game.Lighting.Ambient = Color3.fromRGB(128, 128, 128)
+        for _, child in ipairs(game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+            if child:IsA("PointLight") then
+                child:Destroy()
             end
         end
-    end
+    end,
 })
 
-MiscellaneousTab:AddButton({
+-- Infinite Jump Toggle
+local infiniteJumpEnabled = false
+local infiniteJumpConnection
+MiscellaneousTab:CreateToggle({
     Name = "Infinite Jump",
-    Callback = function()
-        if not isInCooldown("Infinite Jump") then
-            applyCooldown("Infinite Jump")
-            _G.InfiniteJumpEnabled = true
-            game:GetService("UserInputService").JumpRequest:Connect(function()
-                if _G.InfiniteJumpEnabled then
-                    game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
-                end
-            end)
-        end
-    end
-})
-
-MiscellaneousTab:AddButton({
-    Name = "Stop Infinite Jump",
-    Callback = function()
-        if not isInCooldown("Stop Infinite Jump") then
-            applyCooldown("Stop Infinite Jump")
-            _G.InfiniteJumpEnabled = false
-        end
-    end
-})
-
-MiscellaneousTab:AddToggle({
-    Name = "Anti-AFK",
-    Default = false,
+    CurrentValue = false,
+    Flag = "InfiniteJump",
     Callback = function(Value)
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid")
-
-        if Value then
-            while Value do
-                wait(5)
-                humanoid:Move(Vector3.new(math.random(), math.random(), math.random()))
+        infiniteJumpEnabled = Value
+        local humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        if infiniteJumpEnabled then
+            infiniteJumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
+                humanoid:ChangeState("Seated")
+                humanoid:ChangeState("Jumping")
+            end)
+        else
+            if infiniteJumpConnection then
+                infiniteJumpConnection:Disconnect()  -- Disable Infinite Jump by disconnecting the event
             end
         end
-    end    
+    end,
 })
 
-CreditsTab:AddLabel("Credits")
-CreditsTab:AddParagraph("Made by BlackWaterYT", "Thanks to the community for the support!")
-CreditsTab:AddLabel("Special thanks for all the help!")
+-- Credits Tab
+local CreditsTab = Window:CreateTab("Credits", 4483362458)
 
-OrionLib:Init()
+CreditsTab:CreateLabel("Made by BlackWaterYT")
+CreditsTab:CreateLabel("Special thanks for all the help!")
+
+Rayfield:Initialize()
