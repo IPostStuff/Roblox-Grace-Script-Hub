@@ -3,9 +3,9 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
     Name = "Grace Script Hub",
     Icon = 0,
-    LoadingTitle = "Grace ScriptHub Loading..",
-    LoadingSubtitle = "Made With ❤ By Blackwateryt",
-    Theme = "DarkBlue", -- Set theme to DarkBlue
+    LoadingTitle = "Grace ScriptHub Loading...",
+    LoadingSubtitle = "Made With ❤ By BlackWaterYT",
+    Theme = "DarkBlue",
     DisableRayfieldPrompts = false,
     DisableBuildWarnings = false,
     ConfigurationSaving = {
@@ -30,7 +30,6 @@ local Window = Rayfield:CreateWindow({
     }
 })
 
--- Scripts Tab
 local ScriptsTab = Window:CreateTab("Scripts", 4483362458)
 
 ScriptsTab:CreateButton({
@@ -54,7 +53,6 @@ ScriptsTab:CreateButton({
     end,
 })
 
--- Add sliders to the Scripts Tab
 ScriptsTab:CreateSlider({
     Name = "Walk Speed",
     Range = {0, 500},
@@ -79,10 +77,8 @@ ScriptsTab:CreateSlider({
     end,
 })
 
--- Miscellaneous Tab
 local MiscellaneousTab = Window:CreateTab("Miscellaneous", 4483362458)
 
--- Infinite Yield Button (Moved to top)
 MiscellaneousTab:CreateButton({
     Name = "Infinite Yield",
     Callback = function()
@@ -90,7 +86,6 @@ MiscellaneousTab:CreateButton({
     end,
 })
 
--- Ghost Hub Button (Under Infinite Yield)
 MiscellaneousTab:CreateButton({
     Name = "Ghost Hub",
     Callback = function()
@@ -98,7 +93,6 @@ MiscellaneousTab:CreateButton({
     end,
 })
 
--- Nameless Admin Button (Under Ghost Hub)
 MiscellaneousTab:CreateButton({
     Name = "Nameless Admin",
     Callback = function()
@@ -106,7 +100,6 @@ MiscellaneousTab:CreateButton({
     end,
 })
 
--- Anti AFK Toggle
 local AntiAFK = false
 MiscellaneousTab:CreateToggle({
     Name = "Anti AFK",
@@ -123,7 +116,6 @@ MiscellaneousTab:CreateToggle({
     end,
 })
 
--- Fullbright Button
 local fullBrightEnabled = false
 MiscellaneousTab:CreateButton({
     Name = "Fullbright",
@@ -139,7 +131,6 @@ MiscellaneousTab:CreateButton({
     end,
 })
 
--- Destroy Fullbright Button
 MiscellaneousTab:CreateButton({
     Name = "Destroy Fullbright",
     Callback = function()
@@ -155,7 +146,6 @@ MiscellaneousTab:CreateButton({
     end,
 })
 
--- Infinite Jump Toggle
 local infiniteJumpEnabled = false
 local infiniteJumpConnection
 MiscellaneousTab:CreateToggle({
@@ -172,13 +162,12 @@ MiscellaneousTab:CreateToggle({
             end)
         else
             if infiniteJumpConnection then
-                infiniteJumpConnection:Disconnect()  -- Disable Infinite Jump by disconnecting the event
+                infiniteJumpConnection:Disconnect()
             end
         end
     end,
 })
 
--- Credits Tab
 local CreditsTab = Window:CreateTab("Credits", 4483362458)
 
 CreditsTab:CreateLabel("Made by BlackWaterYT")
